@@ -3,15 +3,31 @@ import 'package:flutter/material.dart';
 const textInputDecoration = InputDecoration(
   labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+    borderSide: BorderSide(color: Color(0xFFee7b64), width: 4),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+    borderSide: BorderSide(color: Color(0xFFee7b64), width: 4),
   ),
   errorBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Color(0xFFee7b64), width: 2),
+    borderSide: BorderSide(color: Color(0xFFee7b64), width: 4),
   ),
 );
+
+void showSnackbar(context, color, message) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      message,
+      style: const TextStyle(fontSize: 14),
+    ),
+    backgroundColor: color,
+    duration: const Duration(seconds: 2),
+    action: SnackBarAction(
+      label: "OK",
+      onPressed: () {},
+      textColor: Colors.white,
+    ),
+  ));
+}
 
 class IconWidgets extends StatefulWidget {
   final String iconPath;
