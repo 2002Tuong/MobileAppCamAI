@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const textInputDecoration = InputDecoration(
-  labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
+  labelStyle: TextStyle(
+      color: Color.fromARGB(255, 254, 255, 255), fontWeight: FontWeight.w400),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Color(0xFFee7b64), width: 4),
+    borderSide: BorderSide(color: Color.fromARGB(255, 0, 255, 162), width: 2),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Color(0xFFee7b64), width: 4),
+    borderSide: BorderSide(color: Color.fromARGB(255, 245, 46, 6), width: 2),
   ),
   errorBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Color(0xFFee7b64), width: 4),
   ),
 );
+
+void nextScreen(context, page) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+}
+
+void nextScreenReplace(context, page) {
+  Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => page));
+}
 
 void showSnackbar(context, color, message) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -20,7 +31,7 @@ void showSnackbar(context, color, message) {
       style: const TextStyle(fontSize: 14),
     ),
     backgroundColor: color,
-    duration: const Duration(seconds: 2),
+    duration: const Duration(seconds: 10),
     action: SnackBarAction(
       label: "OK",
       onPressed: () {},
@@ -30,19 +41,23 @@ void showSnackbar(context, color, message) {
 }
 
 class IconWidgets extends StatefulWidget {
-  final String iconPath;
+  final FaIcon iconPath;
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color vcolor;
   final bool isText;
+  final bool flag;
+  final bool enable;
 
   const IconWidgets({
     Key? key,
     required this.iconPath,
     required this.text,
     required this.onPressed,
-    required this.vcolor,
+    this.vcolor = const Color(0xff525F80),
     this.isText = false,
+    this.flag = false,
+    this.enable = false,
   }) : super(key: key);
 
   @override
@@ -57,12 +72,13 @@ class _IconWidgetsState extends State<IconWidgets> {
       children: [
         Stack(children: [
           MaterialButton(
-            onPressed: widget.onPressed,
+            onPressed: widget.enable ? null : widget.onPressed,
             color: widget.vcolor,
             textColor: Colors.white,
             padding: const EdgeInsets.all(16),
             shape: const CircleBorder(),
-            child: Image.asset(widget.iconPath),
+            disabledColor: const Color(0xff856BCF),
+            child: widget.iconPath,
           ),
           if (widget.isText)
             Positioned(
